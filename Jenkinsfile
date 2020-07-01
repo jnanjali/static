@@ -3,6 +3,8 @@ pipeline {
   stages {
     stage('Upload to AWS') {
       steps {
+        script
+{
         files = findFiles(glob: '*.html')
 
       files.each { 
@@ -11,6 +13,7 @@ pipeline {
        s3Upload(file:"${it}", bucket:'jenkinsbucket011', path:"${bucket_path}")
         }
     }
+}
        
       }
     }
