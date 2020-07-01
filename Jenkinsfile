@@ -3,15 +3,15 @@ pipeline {
   stages {
     stage('Upload to AWS') {
       steps {
-        step {
-          def identity = awsIdentity()
+        files = findFiles(glob: '*.html')
+
+      files.each { 
+      println "RPM:  ${it}"
+      withAWS(region:'us-west-1',credentials:'aws-static'){
+       s3Upload(file:"${it}", bucket:'jenkinsbucket011', path:"${bucket_path}")
         }
-        withAWS(region:'us-west-1',credentials:'aws-static') {
-
-
-                // Upload files from working directory 'dist' in your project workspace
-                s3Upload(file: 'index.html', bucket:"jenkinsbucket011", workingDir:'', includePathPattern:'**/*.html');
-            }
+    }
+       
       }
     }
   }
