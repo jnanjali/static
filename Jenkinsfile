@@ -5,6 +5,8 @@ pipeline {
       steps {
         script
 {
+      def identity = awsIdentity()
+  
         files = findFiles(glob: '*.html')
 
       files.each { 
